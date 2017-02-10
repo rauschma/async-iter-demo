@@ -1,18 +1,17 @@
 {
   "dependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-preset-es2015-node": "^6.1.0",
-    "babel-preset-es2016": "^6.16.0",
-    "babel-preset-es2017": "^6.16.0",
-    "babel-plugin-transform-async-generator-functions": "^6.17.0"
+    "async-csp": "^0.5.0",
+    "babel-cli": "^6.22.2",
+    "babel-plugin-transform-async-generator-functions": "^6.22.0",
+    "babel-preset-env": "^1.1.8"
   },
   "//1": "Things only needed by tests:",
   "//2": "mocha needs babel-register and babel-polyfill",
-  "//3": "babel-node (inside babel-cli) normally takes care of babel-polyfill",
+  "//3": "babel-node (inside babel-cli) normally takes care of babel-polyfill; babel-register doesn’t",
   "devDependencies": {
-    "babel-register": "^6.9.0",
-    "babel-polyfill": "^6.16.0",
-    "mocha": "^3.1.0"
+    "babel-register": "^6.22.0",
+    "babel-polyfill": "^6.22.0",
+    "mocha": "^3.2.0"
   },
   "scripts": {
     "b": "babel-node",
@@ -20,9 +19,14 @@
   },
   "babel": {
     "presets": [
-      "es2015-node",
-      "es2016",
-      "es2017"
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
     ],
     "plugins": [
       "transform-async-generator-functions"
@@ -30,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rauschma/async-iter-demo"
+    "url": "TODO"
   },
   "author": "Axel Rauschmayer",
   "license": "MIT"
