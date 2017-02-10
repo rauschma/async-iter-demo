@@ -51,16 +51,28 @@ async function* splitLines(chunksAsync) {
 }
 
 /**
- * @returns an async iterable
+ * @returns an async iterable 
  */
-function readLines(fileName) {
-    const queue = readFile(fileName);
-    return splitLines(queue);
+async function* numberLines(lines) {
+    let n = 1;
+    for await (const line of lines) {
+        yield `${n} ${line}`;
+        n++;
+    }
 }
 
-(async function () {
-    const fileName = process.argv[2];
-    for await (const line of readLines(fileName)) {
-        console.log('>', line);
+/**
+ * @returns a Promise 
+ */
+async function logLines(asyncIterable) {
+    for await (const line of asyncIterable) {
+        console.log(line);
     }
-})();
+}
+
+async function main() {
+    const fileName = process.argv[2];
+    const asyncIterable = numberLines(splitLines(readFile(fileName)));
+    await logLines(asyncIterable);
+}
+main();
