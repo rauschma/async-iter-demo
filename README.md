@@ -1,3 +1,9 @@
+# Asynchronous iteration demo
+
+More information on asynchronous iteration: http://www.2ality.com/2016/10/asynchronous-iteration.html
+
+## Demo
+
 Trying out the `lines` command line tool:
 
 * Version using async iteration:
@@ -11,6 +17,8 @@ Trying out the `lines` command line tool:
     ```text
     npm run b src/lines-csp.js src/lines.js
     ```
+
+## Tests
 
 Running the tests:
 
