@@ -20,10 +20,10 @@ function readFile(fileName) {
     return channel;
 }
 
-async function splitLines(input, output) {
+async function splitLines(inputChannel, outputChannel) {
     let previous = '';
     while (true) {
-        const chunk = await input.takeWithErrors();
+        const chunk = await inputChannel.takeWithErrors();
         if (chunk === ChannelWithErrors.DONE) {
             break;
         }
@@ -31,30 +31,30 @@ async function splitLines(input, output) {
         let eolIndex;
         while ((eolIndex = previous.indexOf('\n')) >= 0) {
             const line = previous.slice(0, eolIndex);
-            output.put(line);
+            outputChannel.put(line);
             previous = previous.slice(eolIndex+1);
         }
     }
     if (previous.length > 0) {
-        output.put(previous);
+        outputChannel.put(previous);
     }
-    output.close();
+    outputChannel.close();
 }
 
-async function numberLines(input, output) {
+async function numberLines(inputChannel, outputChannel) {
     for (let n=1;; n++) {
-        const line = await input.takeWithErrors();
+        const line = await inputChannel.takeWithErrors();
         if (line === ChannelWithErrors.DONE) {
             break;
         }
-        output.put(`${n} ${line}`);
+        outputChannel.put(`${n} ${line}`);
     }
-    output.close();
+    outputChannel.close();
 }
 
-async function logLines(ch) {
+async function logLines(channel) {
     while (true) {
-        const line = await ch.takeWithErrors();
+        const line = await channel.takeWithErrors();
         if (line === ChannelWithErrors.DONE) break;
         console.log(line);
     }
